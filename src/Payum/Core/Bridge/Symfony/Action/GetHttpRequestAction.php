@@ -5,6 +5,7 @@ use Payum\Core\Action\ActionInterface;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Request\GetHttpRequest;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class GetHttpRequestAction implements ActionInterface
 {
@@ -12,6 +13,16 @@ class GetHttpRequestAction implements ActionInterface
      * @var Request
      */
     protected $httpRequest;
+
+    /**
+     * @param RequestStack|null $httpRequestStack
+     */
+    public function setHttpRequestStack(RequestStack $httpRequestStack = null)
+    {
+        if ($httpRequestStack) {
+            $this->httpRequest = $httpRequestStack->getCurrentRequest();
+        }
+    }
 
     /**
      * @param Request|null $httpRequest
